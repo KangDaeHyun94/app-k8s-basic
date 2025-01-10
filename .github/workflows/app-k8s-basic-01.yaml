@@ -1,8 +1,9 @@
 name: App With Github Actions with Docker CI/CD
 
 on:
-  push
   # workflow_dispatch
+  push
+
 jobs:
   ci:
     runs-on: ubuntu-latest
@@ -16,13 +17,13 @@ jobs:
         distribution: 'temurin'
         cache: maven
 
-      - name: Make application.properties
-        run: |
-          cd ./src/main/resources
-          touch ./application.properties
-          echo "${{ secrets.PROPERTIES }}" > ./application.properties
-        shell: bash
-        
+    - name: Make application.properties
+      run: |
+        cd ./src/main/resources
+        touch ./application.properties
+        echo "${{ secrets.PROPERTIES }}" > ./application.properties
+      shell: bash
+
     - name: Build with Maven
       run: mvn -B -DskipTests package --file pom.xml
       
